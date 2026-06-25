@@ -4,7 +4,10 @@
   "type": "module",
   "description": "CLI tooling to deploy + interact with the Grid Audit Registry on a Midnight network (current SDK).",
   "scripts": {
-    "demo": "node demo.mjs"
+    "demo": "tsx demo.ts"
+  },
+  "devDependencies": {
+    "tsx": "^4.19.0"
   },
   "dependencies": {
     "@midnight-ntwrk/compact-js": "^2.5.0",

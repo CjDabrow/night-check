@@ -1,18 +1,23 @@
-# Grid Audit: a privacy-preserving audit registry on Midnight
+# Grid Audit: review your Midnight code, then certify it on-chain
 
-Grid Audit is a Midnight dApp. Its core is an **on-chain attestation registry**: a
-**Compact smart contract** where an auditor publishes a tamper-evident *receipt* of a
-security audit. The contract is privacy-preserving: the auditor proves authorization with
-a **secret witness** that is **never disclosed**, and only a **commitment** to the
-(private) report is written on-chain. A small CLI deploys and exercises the contract using
-the real Midnight SDK (verified end-to-end against a local Midnight node, see below).
+Grid Audit reviews **Midnight code** (Compact contracts, proof-server config, and dApp/SDK
+source) and tells you whether it is sound: it flags the privacy and security traps specific
+to Midnight, each with a severity and a fix. You then get a **verdict** for the code.
 
-The point for Midnight is the contract: it does **not** `disclose()` everything. It
-demonstrates **witnesses + commitments + in-circuit access control**.
+You can then **certify that review on-chain**, privately. A **Compact smart contract** (the
+registry) records a tamper-evident *receipt* that the code was reviewed: the auditor proves
+authorization with a **secret witness** that is **never disclosed**, and only a
+**commitment** to the (private) report is written to the ledger. Anyone can later verify a
+receipt against a report without the report ever being public.
 
-> **Web frontend (coming soon).** A browser UI (the Grid auditor that reviews Midnight
-> code, plus one-click receipt publishing via the 1AM wallet) is in development. The
-> verified, runnable deliverable today is the contract + CLI below.
+So the flow is: **review your code, get a verdict, then certify the result on-chain**. The
+end-to-end demo below does exactly this with the real Midnight SDK, verified against a local
+Midnight node. The contract is genuinely privacy-preserving: it does **not** `disclose()`
+everything; it uses **witnesses + commitments + in-circuit access control**.
+
+> **Web frontend (coming soon).** A point-and-click browser UI for the reviewer, with
+> one-click on-chain certification via the 1AM wallet, is in development. The verified,
+> runnable deliverable today is the CLI demo below.
 
 ## The privacy feature (what makes this a Midnight dApp, not a public ledger)
 
@@ -51,18 +56,18 @@ export circuit publishReceipt(receiptId: Bytes<32>): [] {
 |---|---|
 | [`src/contract/registry.compact`](src/contract/registry.compact) | The privacy-preserving Compact contract |
 | [`src/`](src/) | The Next.js auditor web app (static engine in [`src/engine/`](src/engine/), Midnight wiring in [`src/midnight/`](src/midnight/)) |
-| [`deploy-kit/`](deploy-kit/) | A small CLI that deploys the contract and calls `publishReceipt` using the real Midnight SDK |
+| [`deploy-kit/`](deploy-kit/) | A CLI that reviews a Compact contract and certifies the review on-chain (deploy + `publishReceipt`), using the real Midnight SDK |
 | [`localnet/`](localnet/) | docker-compose for a local Midnight node + indexer + proof server |
 
 ## Prerequisites
 
-- **Node.js ≥ 22** and **npm**
+- **Node.js 22+** and **npm**
 - **Docker + Docker Compose v2** (for the local Midnight network used by the on-chain demo)
 - **The Compact toolchain** (`compact`), to compile the contract from source:
   ```bash
   curl --proto '=https' --tlsv1.2 -LsSf \
     https://github.com/midnightntwrk/compact/releases/latest/download/compact-installer.sh | sh
-  compact update 0.31.0     # this project uses Compact language 0.23 → compiler 0.31.0
+  compact update 0.31.0     # Compact language 0.23 needs compiler 0.31.0
   # ensure ~/.local/bin is on PATH (the installer prints how)
   ```
 
@@ -70,15 +75,16 @@ export circuit publishReceipt(receiptId: Bytes<32>): [] {
 
 ```bash
 npm install
-npm run compile:contract     # compact compile → src/contract/managed + stages zk keys + CLI copy
+npm run compile:contract     # runs compact compile, writes src/contract/managed, stages zk keys + CLI copy
 npm run build                # builds the Next.js web app
 ```
 
-## Run: the on-chain demo (deploy + publish + read, real Midnight SDK)
+## Run: the end-to-end demo (review code, then certify it on-chain)
 
-This spins up a **local** Midnight network (fresh chain, so no faucet and instant sync),
-deploys the privacy contract, calls `publishReceipt` (proving the secret in-circuit), and
-reads the receipt back from the ledger.
+This runs the whole flow on a **local** Midnight network (a fresh chain, so no faucet and
+instant sync): it reviews a sample Compact contract with the real auditor engine, prints
+the verdict and findings, then deploys the registry and certifies that review on-chain, and
+reads the receipt back.
 
 ```bash
 # 1. start node + indexer + proof server (all bound to 127.0.0.1)
@@ -86,7 +92,7 @@ docker compose -f localnet/standalone.yml up -d
 #    wait until all three report healthy:
 docker compose -f localnet/standalone.yml ps
 
-# 2. run the deploy + interaction demo
+# 2. run the demo
 cd deploy-kit
 npm install
 npm run demo
@@ -95,21 +101,28 @@ npm run demo
 Expected output (a real run):
 
 ```
-network: undeployed node: http://127.0.0.1:9944
-unshielded: mn_addr_undeployed1...
-waiting for sync + genesis funds...
-tNight: 250000000000000
-dust ready
-deploying privacy contract (witnesses, proving locally)...
-DEPLOYED=6ef59511ab326b02b189725c62962daa68a821aa386bca4f57e47fc1900512e3
-calling publishReceipt (proves secret in-circuit, never disclosed)...
-PUBLISHED tx=00933d54b5b6daf2...
-RESULT published=1 receiptStored=true
+=== STEP 1: reviewed user-contract.compact ===
+verdict: C1/H0/M2/L1/I1  (NEEDS WORK)
+  [CRITICAL] ownPublicKey() used to authorize the caller (line 11)
+  [MEDIUM] Disclosing a hash of witness data (brute-force risk) (line 15)
+  [MEDIUM] Witness 'userVote' used without an apparent validating assert (line 15)
+  [LOW] Hash/commitment without domain separation (line 15)
+  [INFORMATIONAL] ownPublicKey() used (verify it is not for authorization) (line 8)
+
+=== STEP 2: certify the review on-chain (network: undeployed) ===
+registry deployed at: 13adfda0151a7ddb09908f2a3bc7f436bb36e813db7816d5558e3f1ebb804b03
+receipt published, tx: 00f01813abebc9eef0...
+
+=== STEP 3: read the certificate back from the ledger ===
+receipt on-chain for this contract: true
+total certified audits: 1
 ```
 
-The demo funds a wallet from the local genesis account (seed `0x00…01`), registers NIGHT
-for DUST (to pay fees), then deploys and calls the contract. `receiptStored=true` is read
-back from on-chain ledger state via the indexer.
+Step 1 is the product: the reviewer (`src/engine/`, shared with the web app) finds the real
+bugs in the sample contract and returns a verdict. Steps 2-3 fund a wallet from the local
+genesis account, register NIGHT for DUST (fees), deploy the registry, publish a receipt that
+commits to the private report (proving the auditor secret in-circuit), and read it back from
+on-chain ledger state. Addresses/tx hashes differ each run.
 
 Tear down: `docker compose -f localnet/standalone.yml down`.
 
