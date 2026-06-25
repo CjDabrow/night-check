@@ -1,4 +1,4 @@
-// Orchestrator — runs the static analyzers over whichever inputs were provided and
+// Orchestrator - runs the static analyzers over whichever inputs were provided and
 // returns a merged, severity-sorted result. Phase 2 will add a Claude deep-review
 // pass and merge/dedupe its findings here.
 

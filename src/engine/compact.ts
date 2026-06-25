@@ -1,6 +1,6 @@
 // Static analyzer for Compact smart contracts.
 // Deterministic checks for the highest-signal traps from the Midnight vulnerability
-// taxonomy. Heuristic by design (no full parser yet) — every finding cites a line so
+// taxonomy. Heuristic by design (no full parser yet) - every finding cites a line so
 // a human can confirm. Phase 2 layers a Claude deep-review pass on top.
 
 import type { Finding, Severity, Confidence } from "./types";
@@ -58,7 +58,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
   lines.forEach((raw, i) => {
     const l = stripComment(raw);
 
-    // 3.6 — ownPublicKey() used for authorization (the canonical Compact trap)
+    // 3.6 - ownPublicKey() used for authorization (the canonical Compact trap)
     if (/ownPublicKey\s*\(\s*\)/.test(l)) {
       const usedForAuth =
         /\bassert\s*\(/.test(l) || /[!=]=\s*ownPublicKey\s*\(/.test(l) || /ownPublicKey\s*\(\s*\)\s*[!=]=/.test(l);
@@ -91,7 +91,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
       }
     }
 
-    // 3.1/3.8 — disclosing a bare hash of (potentially low-entropy) witness data
+    // 3.1/3.8 - disclosing a bare hash of (potentially low-entropy) witness data
     if (/disclose\s*\(\s*(persistentHash|transientHash)\s*</.test(l) || /disclose\s*\(\s*(persistentHash|transientHash)\s*\(/.test(l)) {
       findings.push(
         mk(
@@ -107,7 +107,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
       );
     }
 
-    // 3.8 — hash/commit without domain separation (no pad() prefix)
+    // 3.8 - hash/commit without domain separation (no pad() prefix)
     if (/(persistentHash|transientHash|persistentCommit|transientCommit)\s*</.test(l) && !/pad\s*\(/.test(l)) {
       findings.push(
         mk(
@@ -123,7 +123,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
       );
     }
 
-    // 3.1 — private data embedded in an assert/error message
+    // 3.1 - private data embedded in an assert/error message
     if (/\bassert\s*\(/.test(l) && /["'][^"']*["']\s*\+\+/.test(l)) {
       findings.push(
         mk(
@@ -139,7 +139,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
       );
     }
 
-    // 3.7 — Field used with a relational operator (Field has no ordering; only == / !=)
+    // 3.7 - Field used with a relational operator (Field has no ordering; only == / !=)
     if (/\bas\s+Field\b/.test(l) && /(<=|>=|<|>)/.test(l.replace(/=>/g, ""))) {
       findings.push(
         mk(
@@ -147,7 +147,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
           i,
           "LOW",
           "Relational comparison may involve a Field",
-          "Field supports only == and != — relational operators (< <= > >=) require an unsigned integer type. A Field comparison here is likely a bug or a misuse.",
+          "Field supports only == and != - relational operators (< <= > >=) require an unsigned integer type. A Field comparison here is likely a bug or a misuse.",
           "3.7 (arithmetic)",
           "Cast to a bounded Uint before comparing, and ensure the value range is intended.",
           "LOW",
@@ -156,7 +156,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
     }
   });
 
-  // 3.2 — witnesses used without an obvious validating assert
+  // 3.2 - witnesses used without an obvious validating assert
   for (const w of witnessNames) {
     const called = new RegExp(`\\b${w}\\s*\\(`, "g");
     // count calls that are not the declaration
@@ -173,7 +173,7 @@ export function analyzeCompact(source: string, filename = "contract.compact"): F
           at,
           "MEDIUM",
           `Witness '${w}' used without an apparent validating assert`,
-          `Witnesses are arbitrary DApp-supplied inputs — the prover controls their value. '${w}' is used but no assert constraining it was found. Unconstrained witnesses are the dominant Compact bug class (under-constraint).`,
+          `Witnesses are arbitrary DApp-supplied inputs - the prover controls their value. '${w}' is used but no assert constraining it was found. Unconstrained witnesses are the dominant Compact bug class (under-constraint).`,
           "3.2 (under-constraint / missing assertions)",
           `Constrain '${w}'s return before trusting it: bound its range, check membership, or re-derive its relationship to ledger state in-circuit.`,
           "LOW",

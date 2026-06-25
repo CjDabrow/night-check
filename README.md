@@ -1,12 +1,12 @@
-# Grid Audit — a privacy-preserving audit registry on Midnight
+# Grid Audit: a privacy-preserving audit registry on Midnight
 
 Grid Audit is a Midnight dApp in two parts:
 
-1. **A static auditor** (Next.js web app) that reviews **Midnight code** — Compact
-   contracts, proof-server config, and dApp/SDK source — for the privacy and security
+1. **A static auditor** (Next.js web app) that reviews **Midnight code** (Compact
+   contracts, proof-server config, and dApp/SDK source) for the privacy and security
    traps specific to Midnight (e.g. `ownPublicKey()` used for authorization, hashes of
    low-entropy data, proof servers pointed at remote hosts, secrets in logs).
-2. **An on-chain attestation registry** — a **Compact smart contract** where an auditor
+2. **An on-chain attestation registry**: a **Compact smart contract** where an auditor
    publishes a tamper-evident *receipt* of an audit. The contract is privacy-preserving:
    the auditor proves authorization with a **secret witness** that is **never disclosed**,
    and only a **commitment** to the (private) report is written on-chain.
@@ -23,7 +23,7 @@ witness auditorSecret(): Bytes<32>;       // private input, never written to the
 witness reportFingerprint(): Bytes<32>;   // private input, never written to the ledger
 
 constructor() {
-  // store only H(secret) — a commitment to the auditor's identity
+  // store only H(secret), a commitment to the auditor's identity
   ownerCommitment = disclose(persistentHash<Bytes<32>>(auditorSecret()));
 }
 
@@ -40,8 +40,8 @@ export circuit publishReceipt(receiptId: Bytes<32>): [] {
 
 - `auditorSecret` and `reportFingerprint` are **witnesses** (private inputs the prover
   supplies). They are used inside the circuit but are **never** revealed on-chain.
-- Authorization is proven by **knowledge of a secret** matching an on-chain **commitment**
-  — observers learn nothing about the secret, and only the holder can publish. This is the
+- Authorization is proven by **knowledge of a secret** matching an on-chain **commitment**,
+  so observers learn nothing about the secret, and only the holder can publish. This is the
   canonical Midnight pattern (and the opposite of an `ownPublicKey()` auth check).
 - Only commitments (opaque hashes) and a public `receiptId` are disclosed.
 
@@ -84,7 +84,7 @@ npm run dev          # http://localhost:3010
 # /verify checks an audit receipt against its report
 ```
 
-### B) The on-chain demo — deploy + publish + read (real Midnight SDK)
+### B) The on-chain demo: deploy + publish + read (real Midnight SDK)
 
 This spins up a **local** Midnight network (fresh chain, so no faucet and instant sync),
 deploys the privacy contract, calls `publishReceipt` (proving the secret in-circuit), and

@@ -1,4 +1,4 @@
-// Midnight dApp config — 1AM wallet + ProofStation (dust-free, hosted proving).
+// Midnight dApp config - 1AM wallet + ProofStation (dust-free, hosted proving).
 // NEXT_PUBLIC_* are exposed to the browser.
 
 // Network the dApp targets. 1AM supports 'preview' and 'preprod'. Must match the

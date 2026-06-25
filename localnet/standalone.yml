@@ -1,7 +1,7 @@
 # Local standalone Midnight network for development + testing.
 # Images/pins mirror the official midnightntwrk/midnight-local-dev standalone stack.
 # All services bind to 127.0.0.1 only. networkId = "undeployed", node preset = "dev"
-# (a fresh local chain, so wallet sync is instant — no faucet, no public-chain backfill).
+# (a fresh local chain, so wallet sync is instant - no faucet, no public-chain backfill).
 #
 #   docker compose -f localnet/standalone.yml up -d
 #

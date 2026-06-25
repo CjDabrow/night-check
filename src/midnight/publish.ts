@@ -63,7 +63,7 @@ export async function publishReceipt(
   const salt = genSalt();
   const reportHash = await computeReportHash(reportJson);
   const reportId = await computeReportId(reportHash, salt); // public receipt key
-  // The private report fingerprint — only its commitment is written on-chain.
+  // The private report fingerprint - only its commitment is written on-chain.
   const reportFingerprint = await sha256Bytes(reportJson + salt);
 
   const providers = await buildProviders(session);

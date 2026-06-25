@@ -269,7 +269,7 @@ export default function AuditPage() {
                     ) : (
                       <div className="mt-4">
                         <p className="mb-3 font-mono text-xs text-sev-medium">
-                          Registry not deployed yet. Deploy it once (admin) — fees are covered by 1AM.
+                          Registry not deployed yet. Deploy it once (admin) - fees are covered by 1AM.
                         </p>
                         <Button onClick={doDeploy} disabled={deploying}>
                           {deploying ? "DEPLOYING…" : "DEPLOY REGISTRY (ONE-TIME) →"}

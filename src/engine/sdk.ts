@@ -60,7 +60,7 @@ export function analyzeSdk(source: string, filename = "integration.ts"): Finding
           remote ? "CRITICAL" : "LOW",
           remote
             ? "Proof provider configured with a remote endpoint"
-            : "HTTP-client proof provider — confirm endpoint stays local",
+            : "HTTP-client proof provider - confirm endpoint stays local",
           "The proof provider sends private witness data to the proof server. A remote endpoint leaks every user's private inputs.",
           "3.9 (proof server trust) / 3.10 (connector)",
           "Point the proof provider at a local proof server (localhost:6300) or one the user controls.",
@@ -86,7 +86,7 @@ export function analyzeSdk(source: string, filename = "integration.ts"): Finding
       );
     }
 
-    // secret read from process.argv (CLI) — the doc-manager anti-pattern
+    // secret read from process.argv (CLI) - the doc-manager anti-pattern
     if (/process\.argv/.test(l) && SECRET_WORDS.test(l)) {
       findings.push(
         mk(
@@ -97,7 +97,7 @@ export function analyzeSdk(source: string, filename = "integration.ts"): Finding
           "Secret taken from a CLI argument",
           "Passing a mnemonic/secret as a CLI argument leaks it into shell history and process listings.",
           "3.9 (key management)",
-          "Read secrets from a protected file, env var, or interactive prompt — not argv.",
+          "Read secrets from a protected file, env var, or interactive prompt - not argv.",
           "MEDIUM",
         ),
       );

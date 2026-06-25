@@ -1,7 +1,7 @@
 pragma language_version >= 0.23;
 import CompactStandardLibrary;
 
-// Grid Audit Registry — a privacy-preserving on-chain attestation registry.
+// Grid Audit Registry - a privacy-preserving on-chain attestation registry.
 //
 // Privacy features demonstrated (NOT a disclose-everything contract):
 //   - `auditorSecret` is a WITNESS (private input). It is hashed in-circuit and compared
@@ -11,11 +11,11 @@ import CompactStandardLibrary;
 //     fingerprint of the audited report stays private to the prover.
 
 // Public ledger state.
-export ledger ownerCommitment: Bytes<32>;            // H(auditorSecret) — set once at deploy
+export ledger ownerCommitment: Bytes<32>;            // H(auditorSecret) - set once at deploy
 export ledger receipts: Map<Bytes<32>, Bytes<32>>;   // receiptId -> H(reportFingerprint)
 export ledger published: Counter;
 
-// Private inputs (witnesses) — supplied by the prover, never written to the ledger in clear.
+// Private inputs (witnesses) - supplied by the prover, never written to the ledger in clear.
 witness auditorSecret(): Bytes<32>;
 witness reportFingerprint(): Bytes<32>;
 
