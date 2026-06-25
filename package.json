@@ -2,7 +2,7 @@
   "name": "midnight-auditor",
   "version": "0.1.0",
   "private": true,
-  "description": "Grid Audit - Midnight vertical. Audits Compact contracts, proof-server config, and SDK integration.",
+  "description": "Grid Audit: reviews Midnight Compact code for privacy and security bugs, then certifies the review on-chain with a privacy-preserving Compact contract.",
   "scripts": {
     "dev": "next dev -p 3010",
     "build": "next build",

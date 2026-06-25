@@ -2,7 +2,7 @@
   "name": "midnight-deploy-kit",
   "private": true,
   "type": "module",
-  "description": "CLI tooling to deploy + interact with the Grid Audit Registry on a Midnight network (current SDK).",
+  "description": "Grid Audit CLI: review a Compact contract, then deploy the registry and certify the review on-chain (real Midnight SDK).",
   "scripts": {
     "demo": "tsx demo.ts"
   },
