@@ -1,18 +1,18 @@
 # Grid Audit: a privacy-preserving audit registry on Midnight
 
-Grid Audit is a Midnight dApp in two parts:
+Grid Audit is a Midnight dApp. Its core is an **on-chain attestation registry**: a
+**Compact smart contract** where an auditor publishes a tamper-evident *receipt* of a
+security audit. The contract is privacy-preserving: the auditor proves authorization with
+a **secret witness** that is **never disclosed**, and only a **commitment** to the
+(private) report is written on-chain. A small CLI deploys and exercises the contract using
+the real Midnight SDK (verified end-to-end against a local Midnight node, see below).
 
-1. **A static auditor** (Next.js web app) that reviews **Midnight code** (Compact
-   contracts, proof-server config, and dApp/SDK source) for the privacy and security
-   traps specific to Midnight (e.g. `ownPublicKey()` used for authorization, hashes of
-   low-entropy data, proof servers pointed at remote hosts, secrets in logs).
-2. **An on-chain attestation registry**: a **Compact smart contract** where an auditor
-   publishes a tamper-evident *receipt* of an audit. The contract is privacy-preserving:
-   the auditor proves authorization with a **secret witness** that is **never disclosed**,
-   and only a **commitment** to the (private) report is written on-chain.
+The point for Midnight is the contract: it does **not** `disclose()` everything. It
+demonstrates **witnesses + commitments + in-circuit access control**.
 
-The interesting part for Midnight is the contract: it does **not** `disclose()` everything.
-It demonstrates **witnesses + commitments + in-circuit access control**.
+> **Web frontend (coming soon).** A browser UI (the Grid auditor that reviews Midnight
+> code, plus one-click receipt publishing via the 1AM wallet) is in development. The
+> verified, runnable deliverable today is the contract + CLI below.
 
 ## The privacy feature (what makes this a Midnight dApp, not a public ledger)
 
@@ -74,17 +74,7 @@ npm run compile:contract     # compact compile → src/contract/managed + stages
 npm run build                # builds the Next.js web app
 ```
 
-## Run
-
-### A) The auditor web app (no chain needed)
-
-```bash
-npm run dev          # http://localhost:3010
-# open /audit, paste a Compact contract / SDK snippet (or "Try a sample"), get findings
-# /verify checks an audit receipt against its report
-```
-
-### B) The on-chain demo: deploy + publish + read (real Midnight SDK)
+## Run: the on-chain demo (deploy + publish + read, real Midnight SDK)
 
 This spins up a **local** Midnight network (fresh chain, so no faucet and instant sync),
 deploys the privacy contract, calls `publishReceipt` (proving the secret in-circuit), and
@@ -138,6 +128,17 @@ node demo.mjs
 
 (Note: a fresh wallet on a public network must sync chain history, which can take a long
 time; the local network is recommended for evaluation.)
+
+## Web frontend (coming soon)
+
+A browser UI is in development: the Grid auditor (static analysis of Midnight code) plus
+one-click receipt publishing via the 1AM wallet. A preview of the static auditor is live at:
+
+> **https://midnight.gridservices.xyz**
+
+The in-browser publish flow is still being finished, so the verified on-chain path for
+evaluation is the CLI demo above. (The web app source lives in [`src/`](src/) and builds
+with `npm run build`.)
 
 ## SDK packages used (all real, current Midnight SDK)
 
