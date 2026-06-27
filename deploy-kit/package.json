@@ -1,8 +1,8 @@
 {
-  "name": "midnight-deploy-kit",
+  "name": "night-check-cli",
   "private": true,
   "type": "module",
-  "description": "Grid Audit CLI: review a Compact contract, then deploy the registry and certify the review on-chain (real Midnight SDK).",
+  "description": "Night Check CLI: review a Compact contract, then deploy the registry and certify the review on-chain (real Midnight SDK).",
   "scripts": {
     "demo": "tsx demo.ts"
   },

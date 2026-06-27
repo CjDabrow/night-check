@@ -4,7 +4,7 @@ import { BracketLabel } from "@/components/ui";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Grid Audit · Midnight",
+  title: "Night Check · Midnight",
   description:
     "Free security checks for Midnight apps: smart contracts, proof servers, and app code.",
 };
@@ -17,7 +17,7 @@ function Nav() {
     >
       <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-pixel text-sm text-grid-text">GRID</span>
+          <span className="font-pixel text-sm text-grid-text">NIGHT</span>
           <BracketLabel>MIDNIGHT</BracketLabel>
         </Link>
         <div className="flex items-center gap-6 font-mono text-xs tracking-widest text-grid-text-2">
@@ -40,7 +40,7 @@ function Footer() {
   return (
     <footer className="border-t border-grid-border py-8">
       <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-between gap-2 px-6 font-mono text-xs text-grid-text-3 md:flex-row">
-        <span>© 2026 Grid Audit · Midnight</span>
+        <span>© 2026 Night Check · Midnight</span>
         <span>Private by default · audits run in your browser</span>
       </div>
     </footer>

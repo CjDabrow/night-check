@@ -2,7 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   // Standalone Midnight auditor. Engine lives in src/engine (framework-free) so it
-  // ports into the Grid Audit platform (src/services/agents) later.
+  // ports into the Night Check platform (src/services/agents) later.
   output: "standalone", // lean self-contained server for the Docker image
   async redirects() {
     // /admin was the old operator-console URL; the tool is now the user-facing /audit.

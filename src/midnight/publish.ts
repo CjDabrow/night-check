@@ -23,7 +23,7 @@ const sha256Bytes = async (s: string): Promise<Uint8Array> =>
 // never disclosed). The SAME secret must be used at deploy and publish. The operator sets it
 // via NEXT_PUBLIC_AUDITOR_TAG; for the verified on-chain demo see deploy-kit/ (CLI).
 const auditorSecretBytes = (): Promise<Uint8Array> =>
-  sha256Bytes(process.env.NEXT_PUBLIC_AUDITOR_TAG ?? "grid-audit-operator");
+  sha256Bytes(process.env.NEXT_PUBLIC_AUDITOR_TAG ?? "night-check-operator");
 
 // Build the compiled contract with its witness implementations (auditorSecret + the private
 // report fingerprint). Keys/zkir are fetched at tx time via providers.zkConfigProvider.

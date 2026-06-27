@@ -33,7 +33,7 @@ export default function Landing() {
           Security checks for privacy-first Midnight apps.
         </h1>
         <p className="mt-6 max-w-2xl font-sans text-lg text-grid-text-2">
-          Privacy tech doesn&apos;t mean bug-free. Grid checks the things that make or break a Midnight
+          Privacy tech doesn&apos;t mean bug-free. Night Check reviews the things that make or break a Midnight
           app: what your <span className="text-grid-text">contract</span> actually reveals, whether
           your <span className="text-grid-text">proof server</span> leaks private data, and how your{" "}
           <span className="text-grid-text">app code</span> handles secrets.
@@ -63,7 +63,7 @@ export default function Landing() {
       {/* coverage */}
       <section id="coverage" className="border-t border-grid-border py-16">
         <SectionLabel num="02" label="Coverage" />
-        <h2 className="mb-10 max-w-2xl text-3xl font-semibold md:text-4xl">What Grid reviews</h2>
+        <h2 className="mb-10 max-w-2xl text-3xl font-semibold md:text-4xl">What Night Check reviews</h2>
         <div className="grid gap-5 md:grid-cols-3">
           {PILLARS.map((p) => (
             <Card key={p.t}>

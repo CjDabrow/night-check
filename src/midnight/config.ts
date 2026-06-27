@@ -5,7 +5,7 @@
 // network the user's 1AM wallet is set to.
 export const NETWORK = process.env.NEXT_PUBLIC_MIDNIGHT_NETWORK ?? "preview";
 
-// Address of the deployed Grid Audit Registry (set after the one-time browser deploy).
+// Address of the deployed Night Check Registry (set after the one-time browser deploy).
 export const REGISTRY_ADDRESS = process.env.NEXT_PUBLIC_REGISTRY_ADDRESS ?? "";
 
 // Wallet connector key under window.midnight[...]. 1AM injects under "1am".

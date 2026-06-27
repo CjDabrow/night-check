@@ -1,7 +1,7 @@
 @import url("https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&family=Press+Start+2P&display=swap");
 @import "tailwindcss";
 
-/* ── Grid Audit theme (cloned from the platform for a 1:1 vibe) ──────────────
+/* ── Night Check theme (cloned from the platform for a 1:1 vibe) ──────────────
    Plain @theme with literal values so Tailwind v4 generates the utilities
    (bg-grid-bg, text-grid-accent, font-mono, rounded-sm, text-sev-critical, …). */
 @theme {

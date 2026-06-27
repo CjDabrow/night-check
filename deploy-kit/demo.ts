@@ -1,4 +1,4 @@
-// End-to-end demo of Grid Audit's core flow:
+// End-to-end demo of Night Check's core flow:
 //   1. REVIEW real Compact code with the auditor engine (tells you if it's good or not).
 //   2. CERTIFY that review on-chain: deploy the privacy registry and publish a receipt
 //      committing to the (private) report, proving the auditor's secret in-circuit.

@@ -111,7 +111,7 @@ export default function AuditPage() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement("a");
     a.href = url;
-    a.download = `grid-receipt-${receipt.reportId.slice(0, 12)}.json`;
+    a.download = `nightcheck-receipt-${receipt.reportId.slice(0, 12)}.json`;
     a.click();
     URL.revokeObjectURL(url);
   }

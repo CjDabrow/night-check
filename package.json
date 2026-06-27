@@ -1,8 +1,8 @@
 {
-  "name": "midnight-auditor",
+  "name": "night-check",
   "version": "0.1.0",
   "private": true,
-  "description": "Grid Audit: reviews Midnight Compact code for privacy and security bugs, then certifies the review on-chain with a privacy-preserving Compact contract.",
+  "description": "Night Check: reviews Midnight Compact code for privacy and security bugs, then certifies the review on-chain with a privacy-preserving Compact contract.",
   "scripts": {
     "dev": "next dev -p 3010",
     "build": "next build",

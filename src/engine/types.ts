@@ -1,11 +1,10 @@
-// Merge-ready finding model. Shaped to match the Grid Audit platform's
-// AgentFinding/AgentOutput (src/services/agents/types.ts) so these analyzers drop
-// into Grid's agent registry later with minimal changes.
+// Finding model for the Night Check reviewer. Each static analyzer returns these,
+// and both the web app and the CLI render them.
 
 export type Severity = "CRITICAL" | "HIGH" | "MEDIUM" | "LOW" | "INFORMATIONAL";
 
-// Grid pillars we map Midnight findings onto. CONTRACT->SMART_LOGIC,
-// PROOF_SERVER->INFRASTRUCTURE, SDK->WEB3 when ported into Grid.
+// Pillars we map Midnight findings onto: CONTRACT->SMART_LOGIC,
+// PROOF_SERVER->INFRASTRUCTURE, SDK->WEB3.
 export type Pillar = "SMART_LOGIC" | "INFRASTRUCTURE" | "WEB3";
 
 export type Domain = "CONTRACT" | "PROOF_SERVER" | "SDK";

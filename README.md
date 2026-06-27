@@ -1,8 +1,8 @@
-# Grid Audit: review your Midnight code, then certify it on-chain
+# Night Check: review your Midnight code, then certify it on-chain
 
 > This project is built on the Midnight Network.
 
-Grid Audit reviews **Midnight code** (Compact contracts, proof-server config, and dApp/SDK
+Night Check reviews **Midnight code** (Compact contracts, proof-server config, and dApp/SDK
 source) and tells you whether it is sound: it flags the privacy and security traps specific
 to Midnight, each with a severity and a fix. You then get a **verdict** for the code.
 
@@ -146,7 +146,7 @@ time; the local network is recommended for evaluation.)
 
 ## Web frontend (coming soon)
 
-A browser UI is in development: the Grid auditor (static analysis of Midnight code) plus
+A browser UI is in development: Night Check's reviewer (static analysis of Midnight code) plus
 one-click receipt publishing via the 1AM wallet. A preview of the static auditor is live at:
 
 > **https://midnight.gridservices.xyz**

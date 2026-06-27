@@ -1,7 +1,7 @@
 pragma language_version >= 0.23;
 import CompactStandardLibrary;
 
-// Grid Audit Registry - a privacy-preserving on-chain attestation registry.
+// Night Check Registry - a privacy-preserving on-chain attestation registry.
 //
 // Privacy features demonstrated (NOT a disclose-everything contract):
 //   - `auditorSecret` is a WITNESS (private input). It is hashed in-circuit and compared
