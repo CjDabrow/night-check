@@ -17,12 +17,22 @@ import { indexerPublicDataProvider } from "@midnight-ntwrk/midnight-js-indexer-p
 import { levelPrivateStateProvider } from "@midnight-ntwrk/midnight-js-level-private-state-provider";
 import { Buffer } from "buffer";
 import { webcrypto } from "node:crypto";
+import { existsSync } from "node:fs";
 import { CFG, NETWORK } from "./config.mjs";
 import { buildWallet, unshieldedBalance } from "./wallet.mjs";
 import { runAudit } from "../src/engine/runAudit"; // the real reviewer (shared with the web app)
-import * as Registry from "./managed/registry/contract/index.js";
 
 const ZK_PATH = new URL("./managed/registry", import.meta.url).pathname;
+
+// Fail fast with a clear message if the contract has not been compiled yet.
+if (!existsSync(new URL("./managed/registry/contract/index.js", import.meta.url).pathname)) {
+  console.error(
+    "Contract not compiled. Run `npm run compile:contract` from the repo root first " +
+      "(it compiles src/contract/registry.compact and stages it into deploy-kit/managed).",
+  );
+  process.exit(1);
+}
+const Registry: any = await import("./managed/registry/contract/index.js");
 const enc = new TextEncoder();
 const sha256 = async (s: string): Promise<Uint8Array> =>
   new Uint8Array(await webcrypto.subtle.digest("SHA-256", enc.encode(s)));

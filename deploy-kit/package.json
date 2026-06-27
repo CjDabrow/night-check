@@ -7,24 +7,24 @@
     "demo": "tsx demo.ts"
   },
   "devDependencies": {
-    "tsx": "^4.19.0"
+    "tsx": "4.22.4"
   },
   "dependencies": {
-    "@midnight-ntwrk/compact-js": "^2.5.0",
+    "@midnight-ntwrk/compact-js": "2.5.1",
     "@midnight-ntwrk/compact-runtime": "0.16.0",
-    "@midnight-ntwrk/ledger-v8": "^8.0.0",
-    "@midnight-ntwrk/midnight-js": "^4.0.4",
-    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "^4.0.4",
-    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "^4.0.4",
-    "@midnight-ntwrk/midnight-js-level-private-state-provider": "^4.0.4",
-    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "^4.0.4",
-    "@midnight-ntwrk/wallet-sdk-address-format": "^3.0.0",
-    "@midnight-ntwrk/wallet-sdk-dust-wallet": "^3.0.0",
-    "@midnight-ntwrk/wallet-sdk-facade": "^3.0.0",
-    "@midnight-ntwrk/wallet-sdk-hd": "^3.0.0",
-    "@midnight-ntwrk/wallet-sdk-shielded": "^2.0.0",
-    "@midnight-ntwrk/wallet-sdk-unshielded-wallet": "^2.0.0",
-    "rxjs": "^7.8.1",
-    "ws": "^8.18.0"
+    "@midnight-ntwrk/ledger-v8": "8.1.0",
+    "@midnight-ntwrk/midnight-js": "4.1.1",
+    "@midnight-ntwrk/midnight-js-http-client-proof-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-indexer-public-data-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-level-private-state-provider": "4.1.1",
+    "@midnight-ntwrk/midnight-js-node-zk-config-provider": "4.1.1",
+    "@midnight-ntwrk/wallet-sdk-address-format": "3.1.2",
+    "@midnight-ntwrk/wallet-sdk-dust-wallet": "3.0.0",
+    "@midnight-ntwrk/wallet-sdk-facade": "3.0.0",
+    "@midnight-ntwrk/wallet-sdk-hd": "3.0.2",
+    "@midnight-ntwrk/wallet-sdk-shielded": "2.1.0",
+    "@midnight-ntwrk/wallet-sdk-unshielded-wallet": "2.1.0",
+    "rxjs": "7.8.2",
+    "ws": "8.21.0"
   }
 }
