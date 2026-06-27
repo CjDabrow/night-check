@@ -138,7 +138,7 @@ MN_NODE=https://rpc.preprod.midnight.network \
 MN_INDEXER=https://indexer.preprod.midnight.network/api/v3/graphql \
 MN_INDEXER_WS=wss://indexer.preprod.midnight.network/api/v3/graphql/ws \
 MN_PROOF=http://127.0.0.1:6300 \
-node demo.mjs
+npm run demo
 ```
 
 (Note: a fresh wallet on a public network must sync chain history, which can take a long
