@@ -168,5 +168,16 @@ with `npm run build`.)
 
 - The contract is compiled **from source** by `npm run compile:contract`; the generated
   module and zk keys are git-ignored (not committed as pre-built-only artifacts).
-- The auditor engine and the registry contract are original work. The wallet/provider
-  setup follows the official Midnight SDK patterns (that is how the SDK is meant to be used).
+- The auditor engine and the registry contract are original work.
+
+## Credits
+
+Night Check is built with the [Midnight Network](https://midnight.network) SDK. Specific
+upstream work it builds on:
+
+- Wallet and provider setup follows the official
+  [example-counter](https://github.com/midnightntwrk/example-counter).
+- The 1AM wallet integration follows the
+  [1AM Midnight skill](https://github.com/webisoftSoftware/1AM-Midnight-Skill).
+- The local network in [`localnet/`](localnet/) mirrors
+  [midnight-local-dev](https://github.com/midnightntwrk/midnight-local-dev).
