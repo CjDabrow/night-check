@@ -17,7 +17,7 @@ function Nav() {
     >
       <div className="mx-auto flex h-full max-w-[1200px] items-center justify-between px-6">
         <Link href="/" className="flex items-center gap-2">
-          <span className="font-pixel text-sm text-grid-text">NIGHT</span>
+          <span className="font-pixel text-sm text-grid-text">NIGHT CHECK</span>
           <BracketLabel>MIDNIGHT</BracketLabel>
         </Link>
         <div className="flex items-center gap-6 font-mono text-xs tracking-widest text-grid-text-2">
