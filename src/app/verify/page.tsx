@@ -3,10 +3,27 @@
 import { useState } from "react";
 import Link from "next/link";
 import { BracketLabel, Button, Card, SectionLabel } from "@/components/ui";
-import { computeReportHash, computeReportId, type Receipt } from "@/midnight/receipt";
+import { computeReportHash, computeReportId, genSalt, type Receipt } from "@/midnight/receipt";
+import { NETWORK } from "@/midnight/config";
+import { runAudit } from "@/engine/runAudit";
 
 type Status = "idle" | "ok" | "fail" | "error";
 type ChainStatus = "idle" | "ok" | "fail" | "error";
+
+// A small contract with a real bug, used to generate a self-consistent sample receipt so
+// visitors can try the offline check without having run an audit first.
+const SAMPLE_CONTRACT = `pragma language_version >= 0.23;
+import CompactStandardLibrary;
+
+export ledger owner: Bytes<32>;
+witness userVote(): Field;
+
+export circuit setOwner(): [] { owner = disclose(ownPublicKey().bytes); }
+
+// BUG: authorizes the caller with ownPublicKey() (a witness => spoofable)
+export circuit withdraw(): [] {
+  assert(ownPublicKey().bytes == owner, "not owner");
+}`;
 
 export default function Verify() {
   const [receiptText, setReceiptText] = useState("");
@@ -25,6 +42,25 @@ export default function Verify() {
     } catch {
       return null;
     }
+  }
+
+  // Generate a self-consistent receipt + report pair (offline) so visitors can try the
+  // check immediately. The on-chain step won't apply (this sample was never anchored).
+  async function loadSample() {
+    const result = runAudit({ contractSource: SAMPLE_CONTRACT, contractFilename: "sample.compact" });
+    const reportJson = JSON.stringify(result);
+    const s = result.summary.bySeverity;
+    const verdict = `C${s.CRITICAL}/H${s.HIGH}/M${s.MEDIUM}/L${s.LOW}/I${s.INFORMATIONAL}`;
+    const salt = genSalt();
+    const reportHash = await computeReportHash(reportJson);
+    const reportId = await computeReportId(reportHash, salt);
+    const receipt: Receipt = { reportId, reportHash, verdict, salt, network: NETWORK, registryAddress: "" };
+    setReceiptText(JSON.stringify(receipt, null, 2));
+    setReportText(reportJson);
+    setStatus("idle");
+    setDetail([]);
+    setChainStatus("idle");
+    setChainDetail([]);
   }
 
   async function verify() {
@@ -103,7 +139,7 @@ export default function Verify() {
       <p className="mt-3 max-w-2xl font-sans text-grid-text-2">
         Paste a receipt and the original report it points to. We check that they match, right here in
         your browser, and can confirm the receipt is recorded on-chain. The report never leaves your
-        device.
+        device. New here? Hit <span className="text-grid-text">Try a sample</span> to see it work.
       </p>
 
       <div className="mt-8 space-y-5">
@@ -129,6 +165,9 @@ export default function Verify() {
         </div>
 
         <div className="flex flex-wrap items-center gap-3">
+          <Button variant="outline" onClick={loadSample}>
+            TRY A SAMPLE
+          </Button>
           <Button onClick={verify} disabled={!receiptText.trim() || !reportText.trim()}>
             VERIFY OFFLINE →
           </Button>
