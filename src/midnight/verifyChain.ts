@@ -51,7 +51,7 @@ export async function readReceiptOnChain(
   indexerWsUri: string = INDEXER_WS_URI,
 ): Promise<OnChainResult> {
   if (!receipt.registryAddress) {
-    throw new Error("This receipt has no registryAddress, so it was never anchored on-chain.");
+    throw new Error("This receipt has no registry address, so it was never saved on the blockchain.");
   }
   if (!indexerUri || !indexerWsUri) {
     throw new Error(

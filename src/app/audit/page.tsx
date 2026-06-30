@@ -163,8 +163,8 @@ export default function AuditPage() {
       <h1 className="mt-3 text-3xl font-semibold">Audit your Midnight contract</h1>
       <p className="mt-3 max-w-2xl font-sans text-grid-text-2">
         Paste your contract, proof-server config, or app code and get an instant security report
-        that points to the exact line. Nothing is uploaded or stored. When you&apos;re happy with it,
-        you can save a verifiable receipt on-chain.
+        that points to the exact line. Nothing is uploaded or saved. When you&apos;re happy with it,
+        you can save a proof of the review on the blockchain.
       </p>
 
       <div className="mt-8 grid gap-8 lg:grid-cols-2">
@@ -228,15 +228,15 @@ export default function AuditPage() {
 
           {result && (
             <div className="mt-6">
-              <SectionLabel num="03" label="Certify on-chain (optional)" />
+              <SectionLabel num="03" label="Save on the blockchain (optional)" />
               <Card>
                 {!session ? (
                   <>
                     <p className="font-sans text-sm text-grid-text-2">
-                      Want a tamper-proof record that this audit happened? Connect your{" "}
-                      <span className="text-grid-text">1AM</span> wallet to save a receipt on-chain.
-                      Your code and report stay private. Only a scrambled fingerprint of the report
-                      goes on-chain, and anyone can check it later. 1AM covers all fees, so this is
+                      Want a permanent record that this review happened? Connect your{" "}
+                      <span className="text-grid-text">1AM</span> wallet to save a receipt on the
+                      blockchain. Your code and report stay private — only a scrambled fingerprint of
+                      the report is saved, and anyone can check it later. 1AM covers the fees, so it&apos;s
                       free for you.
                     </p>
                     <div className="mt-4">
@@ -260,7 +260,7 @@ export default function AuditPage() {
                     {REGISTRY_ADDRESS ? (
                       <div className="mt-4 flex flex-wrap items-center gap-3">
                         <Button onClick={doPublish} disabled={publishing}>
-                          {publishing ? "PUBLISHING…" : "ANCHOR RECEIPT ON-CHAIN →"}
+                          {publishing ? "SAVING…" : "SAVE RECEIPT ON-CHAIN →"}
                         </Button>
                         <Link href="/verify">
                           <Button variant="outline">VERIFY A RECEIPT</Button>
@@ -269,7 +269,7 @@ export default function AuditPage() {
                     ) : (
                       <div className="mt-4">
                         <p className="mb-3 font-mono text-xs text-sev-medium">
-                          Registry not deployed yet. Deploy it once (admin) - fees are covered by 1AM.
+                          The on-chain registry isn&apos;t set up yet. Deploy it once (admin) — 1AM covers the fees.
                         </p>
                         <Button onClick={doDeploy} disabled={deploying}>
                           {deploying ? "DEPLOYING…" : "DEPLOY REGISTRY (ONE-TIME) →"}

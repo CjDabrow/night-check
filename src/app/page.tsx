@@ -4,23 +4,23 @@ import { BracketLabel, Button, Card, SectionLabel } from "@/components/ui";
 const PILLARS = [
   {
     t: "Smart Contracts",
-    d: "Bugs that let someone bypass your access checks, leak private data, replay a transaction, or get the math wrong. The mistakes that are unique to Compact.",
+    d: "Bugs that let someone slip past your access checks, leak private data, replay a transaction, or get the math wrong — the mistakes that only happen in Compact.",
   },
   {
     t: "Proof Servers",
-    d: "Your proof server sees users' private data in the clear, so it has to run on their own machine. We flag setups that send it to a remote or shared server.",
+    d: "Your proof server sees users' private data in the clear, so it should run on their own machine. We flag setups that send it to a shared or remote server.",
   },
   {
     t: "App &amp; SDK Code",
-    d: "The code around your contract: secret keys ending up in logs, private data sent to the wrong place, and wallet handling that leaks.",
+    d: "The code around your contract: secret keys ending up in logs, private data sent to the wrong place, and wallet code that leaks.",
   },
 ];
 
 const PROCESS = [
   ["01", "Paste", "Drop in your contract, proof-server config, or app code."],
-  ["02", "Analyze", "We check for the known Midnight bugs and point you to the exact line."],
-  ["03", "Report", "Clear findings, ranked by severity, each with a fix you can act on."],
-  ["04", "Certify", "Optionally save a tamper-proof receipt of the audit on-chain."],
+  ["02", "Check", "We look for known Midnight bugs and point you to the exact line."],
+  ["03", "Report", "Clear findings, ranked by how serious they are, each with a fix."],
+  ["04", "Save", "Optional: save proof on the blockchain that the review happened."],
 ];
 
 export default function Landing() {
@@ -30,13 +30,13 @@ export default function Landing() {
       <section className="py-20 md:py-28">
         <BracketLabel>MIDNIGHT VERTICAL</BracketLabel>
         <h1 className="mt-5 max-w-3xl font-bold leading-tight tracking-tight" style={{ fontSize: "clamp(30px, 3.6vw, 48px)" }}>
-          Security checks for privacy-first Midnight apps.
+          Check your Midnight app for security bugs.
         </h1>
         <p className="mt-6 max-w-2xl font-sans text-lg text-grid-text-2">
-          Privacy tech doesn&apos;t mean bug-free. Night Check reviews the things that make or break a Midnight
-          app: what your <span className="text-grid-text">contract</span> actually reveals, whether
-          your <span className="text-grid-text">proof server</span> leaks private data, and how your{" "}
-          <span className="text-grid-text">app code</span> handles secrets.
+          Privacy tech doesn&apos;t mean bug-free. Night Check looks at the parts of a Midnight app
+          that go wrong most: what your <span className="text-grid-text">contract</span> actually
+          gives away, whether your <span className="text-grid-text">proof server</span> leaks private
+          data, and how your <span className="text-grid-text">app code</span> handles secrets.
         </p>
         <div className="mt-9 flex gap-4">
           <Link href="/audit">
@@ -53,10 +53,11 @@ export default function Landing() {
         <SectionLabel num="01" label="Why this matters" />
         <h2 className="max-w-3xl text-3xl font-semibold md:text-4xl">Private by default is not safe by default.</h2>
         <p className="mt-5 max-w-2xl font-sans text-grid-text-2">
-          Midnight keeps your data private unless you explicitly <code className="font-mono text-grid-accent">disclose()</code>{" "}
-          it, but the compiler only stops <em>accidental</em> leaks. It won&apos;t catch an access check
-          that anyone can bypass, a secret value that can be guessed, or a proof server quietly pointed at
-          a remote host. Those are the bugs that drain funds and expose users.
+          Midnight hides your data unless you choose to reveal it with{" "}
+          <code className="font-mono text-grid-accent">disclose()</code>. But the compiler only stops
+          leaks you didn&apos;t mean to write. It won&apos;t catch an access check that anyone can get
+          past, a secret that&apos;s easy to guess, or a proof server quietly pointed at the wrong
+          place. Those are the bugs that drain funds and expose users.
         </p>
       </section>
 
@@ -91,7 +92,7 @@ export default function Landing() {
 
       {/* cta */}
       <section className="border-t border-grid-border py-20 text-center">
-        <h2 className="text-3xl font-semibold md:text-4xl">Audit your Midnight contract now.</h2>
+        <h2 className="text-3xl font-semibold md:text-4xl">Check your Midnight contract now.</h2>
         <p className="mt-4 font-sans text-grid-text-2">
           Free and instant. It runs in your browser, and nothing is uploaded.
         </p>

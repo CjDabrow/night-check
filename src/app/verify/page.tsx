@@ -84,8 +84,8 @@ export default function Verify() {
       ];
       const lines = checks.map(([k, v]) => `${v ? "✅" : "❌"} ${k}`);
       lines.push(
-        "ℹ️ This confirms the receipt matches the report you pasted, entirely offline.",
-        "ℹ️ Use “Check on-chain” below to confirm it is actually recorded on the ledger.",
+        "ℹ️ The receipt matches the report you pasted, checked entirely on your device.",
+        "ℹ️ Use “Check on-chain” below to confirm it's actually saved on the blockchain.",
       );
 
       const allOk = checks.every(([, v]) => v);
@@ -113,10 +113,10 @@ export default function Verify() {
       const res = await readReceiptOnChain(receipt, reportText);
 
       const lines = [
-        `${res.found ? "✅" : "❌"} the receipt id is recorded in the registry`,
-        `${res.commitmentMatches ? "✅" : "❌"} the on-chain commitment matches this report`,
+        `${res.found ? "✅" : "❌"} this receipt is saved in the registry`,
+        `${res.commitmentMatches ? "✅" : "❌"} the saved fingerprint matches this report`,
       ];
-      if (res.total !== undefined) lines.push(`ℹ️ total audits certified by this registry: ${res.total}`);
+      if (res.total !== undefined) lines.push(`ℹ️ total reviews saved by this registry: ${res.total}`);
       lines.push(
         `ℹ️ registry: ${receipt.registryAddress.slice(0, 18)}… on ${receipt.network}`,
       );
@@ -137,9 +137,10 @@ export default function Verify() {
       <BracketLabel>VERIFY · AUDIT RECEIPT</BracketLabel>
       <h1 className="mt-3 text-3xl font-semibold">Verify a receipt</h1>
       <p className="mt-3 max-w-2xl font-sans text-grid-text-2">
-        Paste a receipt and the original report it points to. We check that they match, right here in
-        your browser, and can confirm the receipt is recorded on-chain. The report never leaves your
-        device. New here? Hit <span className="text-grid-text">Try a sample</span> to see it work.
+        Paste a receipt and the report it was made from. We check that they match — right here in
+        your browser — and can confirm the receipt is saved on the blockchain. Your report never
+        leaves your device. New here? Hit <span className="text-grid-text">Try a sample</span> to see
+        how it works.
       </p>
 
       <div className="mt-8 space-y-5">
@@ -195,10 +196,10 @@ export default function Verify() {
               }`}
             >
               {status === "ok"
-                ? "Receipt is consistent with this report."
+                ? "This receipt matches the report."
                 : status === "fail"
                   ? "This report does not match the receipt."
-                  : "Could not verify."}
+                  : "Could not check this."}
             </p>
             <pre className="mt-3 whitespace-pre-wrap font-mono text-xs text-grid-text-2">
               {detail.join("\n")}
@@ -218,10 +219,10 @@ export default function Verify() {
               }`}
             >
               {chainStatus === "ok"
-                ? "Confirmed on-chain: this receipt is recorded and matches the report."
+                ? "Confirmed: this receipt is saved on the blockchain and matches the report."
                 : chainStatus === "fail"
-                  ? "Not confirmed on-chain (see details)."
-                  : "Could not reach the ledger."}
+                  ? "Not confirmed (see details below)."
+                  : "Could not reach the blockchain."}
             </p>
             <pre className="mt-3 whitespace-pre-wrap font-mono text-xs text-grid-text-2">
               {chainDetail.join("\n")}
